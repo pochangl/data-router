@@ -1,6 +1,6 @@
 {
   "name": "data-router",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "main": "build/index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "build": "rm -rf ./build && tsc -p config/tsconfig-src.json",
     "lint": "tslint src/**/*.ts",
     "pretest": "yarn run lint && rm -rf ./test && tsc -p config/tsconfig-test.json",
-    "test": "mocha test",
+    "test": "mocha test/**/*.spec.js",
+    "posttest": "rm -rf ./test",
     "document": "rm -rf ./doc && typedoc --tsconfig config/tsconfig-src.json --out ./docs ./src/ && touch ./docs/.nojekyll"
   },
   "dependencies": {

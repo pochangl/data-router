@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { DemuxRouter } from './Router';
+import { DemuxRouter } from './';
 import { DemuxStrategy } from './Strategy';
 
 interface IInputData {
@@ -18,8 +18,8 @@ class Strategy extends DemuxStrategy<IInputData, number> {
     use data.id as routing reference
     and data.data as pass on data
   */
-  public getRoute(data: IInputData): string {
-    return data.id;
+  public getRoutes(data: IInputData): string[] {
+    return [data.id];
   }
   public getData(data: IInputData): number {
     return data.data;
@@ -30,7 +30,7 @@ class Router extends DemuxRouter<object, number> {
   protected strategy: Strategy = new Strategy();
 }
 
-describe('demux', () => {
+describe('Demux Router', () => {
   let demux: Router = new Router();
 
   let output1: number;
