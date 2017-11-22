@@ -1,8 +1,8 @@
 # RxJS date router
 
-data router based on RxJs
-This project is still in its early phase.
-What I am attempting to do here is to provide a few way to forward data like router does
+data router based on RxJs <br>
+This project is still in its early stage. <br>
+What I am attempting to do here is to provide a few way to forward data like router does.
 <!--
 ## Getting Started
 
