@@ -5,19 +5,24 @@
 import { Subject } from 'rxjs/Subject';
 import { DemuxStrategy } from './Strategy';
 
-interface IChannelToSubjectMap<Key, Type> {
-  [channel: string]: Subject<Type>;
+export interface IStringToOutputMap<Output> {
+  [route: string]: Subject<Output>;
 }
 
 export abstract class DemuxRouter<Input, Output> extends Subject<Input> {
   protected abstract strategy: DemuxStrategy<Input, Output>;
-  protected routes: IChannelToSubjectMap<string, Output>;
+  protected routes: IStringToOutputMap<Output>;
 
   constructor(options?: object) {
     super();
     this.routes = {};
   }
   public route(id: string, data?: Input): Subject<Output> {
+    /*
+      get the observable Subject to the route
+      id is the identifier
+      create route if not found
+    */
     if (this.routes[id]) {
       return this.routes[id];
     } else {
@@ -27,11 +32,15 @@ export abstract class DemuxRouter<Input, Output> extends Subject<Input> {
     }
   }
   public hasRoute(id: string): boolean {
+    /*
+      check whether the route exist
+      unlike route(id, data), this will not create route
+    */
     return !!this.routes[id];
   }
   public next(content: Input): void {
     /*
-      send message to subscribers
+      send message to all direct subscribers
       and route data to branches
     */
     let {data, route} = this.strategy.unwrap(content);

@@ -6,11 +6,18 @@ import { DemuxRouter } from './Router';
 import { DemuxStrategy } from './Strategy';
 
 interface IInputData {
+  /*
+    data format for testing
+  */
   id: string;
   data: number;
 }
 
 class Strategy extends DemuxStrategy<IInputData, number> {
+  /*
+    use data.id as routing reference
+    and data.data as pass on data
+  */
   public getRoute(data: IInputData): string {
     return data.id;
   }

@@ -5,6 +5,10 @@ const chai_1 = require("chai");
 const Router_1 = require("./Router");
 const Strategy_1 = require("./Strategy");
 class Strategy extends Strategy_1.DemuxStrategy {
+    /*
+      use data.id as routing reference
+      and data.data as pass on data
+    */
     getRoute(data) {
         return data.id;
     }
