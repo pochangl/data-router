@@ -2,8 +2,8 @@
 import { expect } from 'chai';
 import { Subject } from 'rxjs/Subject';
 import { Subscription } from 'rxjs/Subscription';
-import { DemuxStrategy } from '../../Strategy';
 import { DemuxRouter } from './';
+import { DemuxStrategy } from './Strategy';
 
 interface IInputData {
   /*

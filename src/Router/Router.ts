@@ -1,11 +1,8 @@
-import { Strategy } from '../Strategy';
-import { RouterSubject } from '../Subject';
+import { IRouter, IRouterConfig, IRouterSubject, IStrategy } from './Interface';
+import { RouterSubject } from './Subject';
 
-export interface IRouterConfig {
-}
-
-export abstract class Router<Input, Output> extends RouterSubject<Input> {
-  protected abstract strategy: Strategy<Input, Output>;
+export abstract class Router<Input, Output> extends RouterSubject<Input> implements IRouter<Input, Output> {
+  protected abstract strategy: IStrategy<Input, Output>;
   public configure(config: IRouterConfig): void {
     return;
   }

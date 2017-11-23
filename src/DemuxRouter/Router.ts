@@ -2,22 +2,18 @@
   demux: decode data
 
 */
-import { DemuxStrategy } from '../../Strategy';
-import { RouterSubject } from '../../Subject';
-import { Router } from './Router';
+import { IRouterSubject, Router, RouterSubject } from '../Router';
+import { IDemuxRoute, IDemuxRouter, IDemuxStrategy } from './Interface';
 
-export interface IDemuxRoute<Output> {
-  [route: string]: RouterSubject<Output>;
-}
-export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> {
-  protected abstract strategy: DemuxStrategy<Input, Output>;
+export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> implements IDemuxRouter<Input, Output> {
+  protected strategy: IDemuxStrategy<Input, Output>;
   protected routes: IDemuxRoute<Output>;
 
   constructor(options?: object) {
     super();
     this.routes = {};
   }
-  public route(id: string, data?: Input): RouterSubject<Output> {
+  public route(id: string, data?: Input): IRouterSubject<Output> {
     /*
       get the observable Subject to the route
       id is the identifier
@@ -26,7 +22,7 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> {
     if (this.routes[id]) {
       return this.routes[id];
     } else {
-      let branchClass: typeof RouterSubject = this.strategy.getBranchClass(data);
+      let branchClass: typeof RouterSubject = <typeof RouterSubject> this.strategy.getBranchClass(data);
       let branch: RouterSubject<Output> = this.routes[id] = new branchClass();
       return branch;
     }
