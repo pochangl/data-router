@@ -4,12 +4,11 @@
 */
 import { DemuxStrategy } from '../../Strategy';
 import { RouterSubject } from '../../Subject';
-import { Router } from '../Router';
+import { Router } from './Router';
 
 export interface IDemuxRoute<Output> {
   [route: string]: RouterSubject<Output>;
 }
-
 export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> {
   protected abstract strategy: DemuxStrategy<Input, Output>;
   protected routes: IDemuxRoute<Output>;
@@ -44,7 +43,7 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> {
       send message to all direct subscribers
       and route data to branches
     */
-    let {data, routes} = this.strategy.unwrap(content);
+    let {data, routes} = this.strategy.unwrap(content, this);
     super.next(content);
     for (let route of routes) {
       this.route(route, content).next(data);

@@ -1,1 +1,1 @@
-export * from './DemuxRouter'
+export * from './DemuxRouter';
