@@ -1,6 +1,7 @@
-import { RouterSubject } from './Subject';
-import { IOutputData, IInputData } from './Data';
-
+export * from './AttributeStrategy';
+export * from './DemuxStrategy';
+import { IInputData, IOutputData } from '../Data';
+import { RouterSubject } from '../Subject';
 
 export abstract class Strategy<Input extends IInputData, Output extends IOutputData> {
   /*

@@ -1,3 +1,4 @@
 export * from './Router';
 export * from './Strategy';
-export * from './DemuxRouter';
+export * from './Subject';
+export * from './Data';

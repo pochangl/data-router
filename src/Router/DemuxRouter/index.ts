@@ -2,10 +2,9 @@
   demux: decode data
 
 */
+import { DemuxStrategy } from '../../Strategy';
+import { RouterSubject } from '../../Subject';
 import { Router } from '../Router';
-import { RouterSubject } from '../Subject';
-import { DemuxStrategy } from './Strategy';
-export * from './Strategy';
 
 export interface IDemuxRoute<Output> {
   [route: string]: RouterSubject<Output>;
