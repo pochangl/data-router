@@ -2,7 +2,8 @@
   demux: decode data
 
 */
-import { IRouterSubject, Router, RouterSubject } from '../Router';
+import { Subject } from 'rxjs/Subject';
+import { Router } from '../Router';
 import { IDemuxRoute, IDemuxRouter, IDemuxStrategy } from './Interface';
 
 export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> implements IDemuxRouter<Input, Output> {
@@ -13,7 +14,7 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> i
     super();
     this.routes = {};
   }
-  public route(id: string, data?: Input): IRouterSubject<Output> {
+  public route(id: string, data?: Input): Subject<Output> {
     /*
       get the observable Subject to the route
       id is the identifier
@@ -22,8 +23,8 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> i
     if (this.routes[id]) {
       return this.routes[id];
     } else {
-      let branchClass: typeof RouterSubject = <typeof RouterSubject> this.strategy.getBranchClass(data);
-      let branch: RouterSubject<Output> = this.routes[id] = new branchClass();
+      let branchClass: typeof Subject = <typeof Subject> this.strategy.getBranchClass(data);
+      let branch: Subject<Output> = this.routes[id] = new branchClass();
       return branch;
     }
   }

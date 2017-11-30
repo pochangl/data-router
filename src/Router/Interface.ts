@@ -1,17 +1,12 @@
 import { Subject } from 'rxjs/Subject';
 
-export interface IInputData {}
-export interface IOutputData extends IInputData {}
-
-export interface IRouterSubject<T> extends Subject<T> {}
-
 export interface IRouterConfig {}
 
-export interface IRouter<Input, Output> extends IRouterSubject<Input> {
+export interface IRouter<Input, Output> extends Subject<Input> {
   configure(config: IRouterConfig): void;
 }
 
-export interface IStrategy<Input extends IInputData, Output extends IOutputData> {
+export interface IStrategy<Input, Output> {
   /*
     basic strategy for router
   */

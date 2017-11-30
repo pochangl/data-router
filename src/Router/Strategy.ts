@@ -1,14 +1,14 @@
-import { IInputData, IOutputData, IRouter, IStrategy } from './Interface';
-import { RouterSubject } from './Subject';
+import { Subject } from 'rxjs/Subject';
+import { IRouter, IStrategy } from './Interface';
 
-export abstract class Strategy<Input extends IInputData, Output extends IOutputData> implements IStrategy<Input, Output> {
+export abstract class Strategy<Input, Output> implements IStrategy<Input, Output> {
   /*
     basic strategy for router
   */
   public abstract getRoutes(data: Input, router: IRouter<Input, Output>): string[];
   public abstract getData(data: Input, router: IRouter<Input, Output>): Output;
 
-  public getBranchClass(data: Input): typeof RouterSubject {
-    return RouterSubject;
+  public getBranchClass(data: Input): typeof Subject {
+    return Subject;
   }
 }
