@@ -4,17 +4,19 @@
 */
 import { Subject } from 'rxjs/Subject';
 import { Router } from '../Router';
-import { IDemuxRoute, IDemuxRouter, IDemuxStrategy } from './Interface';
+import { IDemuxNode, IDemuxRoute, IDemuxRouter, IDemuxRouterConfig } from './Interface';
+import { DemuxNode } from './Node';
+import { DemuxStrategy } from './Strategy';
 
 export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> implements IDemuxRouter<Input, Output> {
-  protected strategy: IDemuxStrategy<Input, Output>;
+  protected strategy: DemuxStrategy<Input, Output>;
   protected routes: IDemuxRoute<Output>;
 
   constructor(options?: object) {
     super();
     this.routes = {};
   }
-  public route(id: string, data?: Input): Subject<Output> {
+  public route(id: string, data?: Input): IDemuxNode<Output> {
     /*
       get the observable Subject to the route
       id is the identifier
@@ -23,8 +25,14 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> i
     if (this.routes[id]) {
       return this.routes[id];
     } else {
-      let branchClass: typeof Subject = <typeof Subject> this.strategy.getBranchClass(data);
-      let branch: Subject<Output> = this.routes[id] = new branchClass();
+      this.routes[id] = this.strategy.createBranch(id, data);
+      let branch: IDemuxNode<Output> = this.routes[id];
+      branch.configure({
+        parent: this,
+        demux: {
+          branch: id,
+        },
+      });
       return branch;
     }
   }
@@ -40,7 +48,7 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> i
       send message to all direct subscribers
       and route data to branches
     */
-    let {data, routes} = this.strategy.unwrap(content, this);
+    let {data, routes} = this.strategy.unwrap(content);
     super.next(content);
     for (let route of routes) {
       this.route(route, content).next(data);

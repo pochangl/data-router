@@ -1,17 +1,20 @@
 import { Subject } from 'rxjs/Subject';
 
-export interface IRouterConfig {}
+export interface IRouterConfig<Input> {
+  parent: IRouter<any, Input>; /* tslint:disable-line no-any*/
+}
 
-export interface IRouter<Input, Output> extends Subject<Input> {
-  configure(config: IRouterConfig): void;
+export interface IRouterNode<Input> extends Subject<Input> {
+  configure(config: IRouterConfig<Input>): void;
+}
+
+export interface IRouter<Input, Output> extends IRouterNode<Input> {
 }
 
 export interface IStrategy<Input, Output> {
   /*
     basic strategy for router
   */
-  getRoutes(data: Input, router: IRouter<Input, Output>): string[];
-  getData(data: Input, router: IRouter<Input, Output>): Output;
-  getBranchClass(data: Input): Function;
-
+  getRoutes(data: Input): string[];
+  getData(data: Input): Output;
 }
