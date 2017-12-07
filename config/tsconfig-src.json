@@ -6,7 +6,9 @@
             "node"
         ],
         "declaration": true,
-        "declarationDir": "../build"
+        "declarationDir": "../build",
+        "emitOnSave": false,
+        "compileOnSave": false
     },
     "include": [
         "../src/**/*.ts"

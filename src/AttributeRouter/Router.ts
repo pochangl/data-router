@@ -6,4 +6,11 @@ export abstract class AttributeRouter<Input, Output> extends DemuxRouter<Input, 
     public abstract dataAttribute: string;
     public abstract routingAttribute: string;
     protected strategy: AttributeStrategy<Input, Output> = new AttributeStrategy<Input, Output>();
+
+    constructor () {
+      super();
+      this.strategy.configure({
+        router: this,
+      });
+    }
 }

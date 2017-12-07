@@ -12,7 +12,7 @@ export abstract class DemuxRouter<Input, Output> extends Router<Input, Output> i
   protected strategy: DemuxStrategy<Input, Output>;
   protected routes: IDemuxRoute<Output>;
 
-  constructor(options?: object) {
+  constructor() {
     super();
     this.routes = {};
   }
