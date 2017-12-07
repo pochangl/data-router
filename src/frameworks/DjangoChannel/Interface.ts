@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs/Subject';
+import { IAttributeRouter } from '../../AttributeRouter';
 import { RouterNode } from '../../Router';
 
 export interface IModelData extends Object {
@@ -18,10 +19,10 @@ export interface IModelNode<T extends IModelData> extends RouterNode<T>, IUpstre
 }
 
 export interface IModelRouterParent {
-  branch: number,
-  data: IModelData
+  branch: number;
+  data: IModelData;
 }
 
-export interface IStreamRouter {
+export interface IStreamRouter extends IAttributeRouter<IStreamData, IModelData> {
 
 }

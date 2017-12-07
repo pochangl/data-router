@@ -1,4 +1,3 @@
 export abstract class Stream {
-  abstract protected stream: string;
-
+  protected abstract stream: string;
 }
